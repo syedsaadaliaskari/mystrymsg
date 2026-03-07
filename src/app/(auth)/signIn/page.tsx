@@ -50,9 +50,16 @@ export default function SignIn() {
     }
 
     // 3. Handle Success
-    if (result?.url) {
+    // 3. Handle Success
+    if (result?.ok) {
+      // Check for 'ok' instead of 'url'
       toast.success("Welcome back!");
-      router.replace("/dashboard"); // Redirect manually
+
+      // Give the session a tiny moment to stabilize before redirecting
+      setTimeout(() => {
+        router.replace("/dashboard");
+        router.refresh(); // Forces Next.js to check the session again
+      }, 100);
     }
   };
 
