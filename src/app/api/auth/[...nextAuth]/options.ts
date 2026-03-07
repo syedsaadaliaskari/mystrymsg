@@ -69,8 +69,11 @@ export const config: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string;
+        // Match the keys exactly as you defined them in the jwt callback
+        session.user._id = token._id as string;
+        session.user.username = token.username as string;
         session.user.isVerified = token.isVerified as boolean;
+        session.user.isAcceptingMessages = token.isAcceptingMessages as boolean;
       }
       return session;
     },

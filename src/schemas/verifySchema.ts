@@ -1,5 +1,5 @@
 import { z } from "zod";
 
 export const verifySchema = z.object({
-  verifyCode: z.string().length(6, { message: "Must be 6 chracters" }),
+  code: z.string().length(6, { message: "Must be 6 chracters" }),
 });

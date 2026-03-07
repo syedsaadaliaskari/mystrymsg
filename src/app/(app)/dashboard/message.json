@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b90123",
+    "content": "Hey! How is the development of mystrymsg going?",
+    "createdAt": "2026-03-06T10:00:00.000Z"
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b90124",
+    "content": "Is this project using Next.js 16 with Turbopack?",
+    "createdAt": "2026-03-06T11:30:00.000Z"
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b90125",
+    "content": "The dashboard layout looks great on mobile!",
+    "createdAt": "2026-03-07T09:15:00.000Z"
+  }
+]
