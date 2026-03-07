@@ -23,12 +23,19 @@ export async function GET(request: Request) {
   try {
     const user = await UserModel.aggregate([
       { $match: { _id: userId } },
-      { $unwind: "$messages" },
+      { $unwind: "$messages" }, // We only unwind if there ARE messages
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]);
 
     if (!user || user.length === 0) {
+      const userExists = await UserModel.findById(userId);
+      if (!userExists) {
+        return Response.json(
+          { success: false, message: "User not found" },
+          { status: 404 },
+        );
+      }
       return Response.json(
         {
           success: false,

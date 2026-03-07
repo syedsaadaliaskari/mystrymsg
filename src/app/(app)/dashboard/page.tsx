@@ -18,9 +18,7 @@ import messagesData from "./message.json";
 
 const Dashboard = () => {
   const { data: session } = useSession();
-  const [messages, setMessages] = useState<Message[]>(
-    messagesData as unknown as Message[],
-  );
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -60,6 +58,7 @@ const Dashboard = () => {
 
       try {
         const response = await axios.get("/api/get-user-messages");
+        console.log("Check this:", response.data); // Look at your browser console for this!
         setMessages(response.data.messages || []);
 
         if (refresh) {
@@ -84,10 +83,16 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    if (!session || !session.user) return;
-    fetchAcceptMessages();
-    fetchMessages();
-  }, [setValue, session, fetchAcceptMessages, fetchMessages]);
+    if (!session?.user) return;
+
+    const loadData = async () => {
+      await fetchAcceptMessages();
+      await fetchMessages();
+    };
+
+    loadData();
+  }, [session, fetchAcceptMessages, fetchMessages]);
+  // Removed setValue from here to keep the array length stable
 
   const handleSwitch = async () => {
     try {

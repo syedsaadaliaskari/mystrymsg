@@ -40,7 +40,13 @@ export const config: NextAuthConfig = {
           );
 
           if (isPasswordCorrect) {
-            return user;
+            return {
+              _id: user._id.toString(), // Crucial: Convert ObjectId to String
+              username: user.username,
+              email: user.email,
+              isVerified: user.isVerified,
+              isAcceptingMessages: user.isAcceptingMessages,
+            };
           } else {
             throw new Error("Password is not correct ");
           }
@@ -60,7 +66,7 @@ export const config: NextAuthConfig = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id;
+        token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.username = user.username;

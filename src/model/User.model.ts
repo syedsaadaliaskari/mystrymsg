@@ -57,9 +57,10 @@ export const UserSchema: Schema<User> = new Schema({
     type: String,
     required: [true, "Verification code is necessary"],
   },
+  messages: [MessageSchema],
   verifyCodeExpiry: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 
