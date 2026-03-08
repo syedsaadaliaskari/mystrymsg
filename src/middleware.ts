@@ -35,32 +35,36 @@
 //   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
 // };
 
-import { auth } from "@/src/auth"; // Path to your auth.ts file
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
-  const { nextUrl } = req;
+export async function middleware(request: NextRequest) {
+  // We use getToken here instead of the 'auth' wrapper
+  // to avoid importing dbConnect into the Edge Runtime
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET,
+  });
+
+  const { nextUrl } = request;
+  const isLoggedIn = !!token;
 
   const isAuthPage = ["/signIn", "/signUp", "/", "/verify"].some((path) =>
     nextUrl.pathname.startsWith(path),
   );
 
-  const isDashboardPage = nextUrl.pathname.startsWith("/dashboard");
-
-  // 1. If logged in and on an auth page -> go to dashboard
   if (isLoggedIn && isAuthPage) {
     return NextResponse.redirect(new URL("/dashboard", nextUrl));
   }
 
-  // 2. If NOT logged in and on dashboard -> go to sign-in
-  if (!isLoggedIn && isDashboardPage) {
+  if (!isLoggedIn && nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/signIn", nextUrl));
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
 };
