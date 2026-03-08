@@ -57,7 +57,8 @@ export default function SignIn() {
 
       // Give the session a tiny moment to stabilize before redirecting
       setTimeout(() => {
-        router.replace("/dashboard");
+        window.location.assign("/dashboard");
+        console.log("Redirecting to dashboard...");
         router.refresh(); // Forces Next.js to check the session again
       }, 100);
     }
