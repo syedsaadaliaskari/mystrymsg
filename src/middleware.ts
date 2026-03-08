@@ -35,36 +35,36 @@
 //   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
 // };
 
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import type { NextRequest } from "next/server";
+// import { getToken } from "next-auth/jwt";
 
-export async function middleware(request: NextRequest) {
-  // We use getToken here instead of the 'auth' wrapper
-  // to avoid importing dbConnect into the Edge Runtime
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET,
-  });
+// export async function middleware(request: NextRequest) {
+//   // We use getToken here instead of the 'auth' wrapper
+//   // to avoid importing dbConnect into the Edge Runtime
+//   const token = await getToken({
+//     req: request,
+//     secret: process.env.AUTH_SECRET,
+//   });
 
-  const { nextUrl } = request;
-  const isLoggedIn = !!token;
+//   const { nextUrl } = request;
+//   const isLoggedIn = !!token;
 
-  const isAuthPage = ["/signIn", "/signUp", "/", "/verify"].some((path) =>
-    nextUrl.pathname.startsWith(path),
-  );
+//   const isAuthPage = ["/signIn", "/signUp", "/", "/verify"].some((path) =>
+//     nextUrl.pathname.startsWith(path),
+//   );
 
-  if (isLoggedIn && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", nextUrl));
-  }
+//   if (isLoggedIn && isAuthPage) {
+//     return NextResponse.redirect(new URL("/dashboard", nextUrl));
+//   }
 
-  if (!isLoggedIn && nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/signIn", nextUrl));
-  }
+//   if (!isLoggedIn && nextUrl.pathname.startsWith("/dashboard")) {
+//     return NextResponse.redirect(new URL("/signIn", nextUrl));
+//   }
 
-  return NextResponse.next();
-}
+//   return NextResponse.next();
+// }
 
-export const config = {
-  matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
-};
+// export const config = {
+//   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
+// };
