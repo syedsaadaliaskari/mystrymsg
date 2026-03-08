@@ -1,44 +1,44 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import type { NextRequest } from "next/server";
+// import { getToken } from "next-auth/jwt";
 
-export async function middleware(request: NextRequest) {
-  // Use the same secret as your options.ts
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET,
-  });
+// export async function middleware(request: NextRequest) {
+//   // Use the same secret as your options.ts
+//   const token = await getToken({
+//     req: request,
+//     secret: process.env.AUTH_SECRET,
+//   });
 
-  const isPublicPage = request.nextUrl.pathname.startsWith("/user");
+//   const isPublicPage = request.nextUrl.pathname.startsWith("/user");
 
-  if (isPublicPage) {
-    return NextResponse.next();
-  }
-  const url = request.nextUrl;
+//   if (isPublicPage) {
+//     return NextResponse.next();
+//   }
+//   const url = request.nextUrl;
 
-  // 1. If user is logged in and tries to access Auth pages
-  if (token) {
-    if (
-      url.pathname === "/" ||
-      url.pathname.startsWith("/signIn") ||
-      url.pathname.startsWith("/signUp") ||
-      url.pathname.startsWith("/verify")
-    ) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
+//   // 1. If user is logged in and tries to access Auth pages
+//   if (token) {
+//     if (
+//       url.pathname === "/" ||
+//       url.pathname.startsWith("/signIn") ||
+//       url.pathname.startsWith("/signUp") ||
+//       url.pathname.startsWith("/verify")
+//     ) {
+//       return NextResponse.redirect(new URL("/dashboard", request.url));
+//     }
+//   }
 
-  // 2. If user is NOT logged in and tries to access Dashboard
-  if (!token && url.pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/signIn", request.url));
-  }
+//   // 2. If user is NOT logged in and tries to access Dashboard
+//   if (!token && url.pathname.startsWith("/dashboard")) {
+//     return NextResponse.redirect(new URL("/signIn", request.url));
+//   }
 
-  return NextResponse.next();
-}
+//   return NextResponse.next();
+// }
 
-export const config = {
-  matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
-};
+// export const config = {
+//   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
+// };
 
 // import { NextResponse } from "next/server";
 // import type { NextRequest } from "next/server";
@@ -74,14 +74,17 @@ export const config = {
 //   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
 // };
 
-// import { NextURL } from "next/dist/server/web/next-url";
-// import { NextResponse } from "next/server";
+import { NextURL } from "next/dist/server/web/next-url";
+import { NextRequest, NextResponse } from "next/server";
 
-// export function middleware() {
+export function middleware(request: NextRequest) {
+  const isPublicPage = request.nextUrl.pathname.startsWith("/user");
+  if (isPublicPage) {
+    return NextResponse.next();
+  }
+  return NextResponse.next();
+}
 
-//   return NextResponse.next();
-// }
-
-// export const config = {
-//   matcher: [], // Matches nothing
-// };
+export const config = {
+  matcher: [], // Matches nothing
+};
