@@ -39,14 +39,13 @@ export default function SignIn() {
     });
 
     // 2. Handle Errors
+    // Replace your error check with this to see what's actually happening
     if (result?.error) {
-      toast.error("Invalid credentials", {
-        style: {
-          backgroundColor: "#000000",
-          color: "#ef4444",
-          border: "1px solid #ef4444",
-        },
-      });
+      console.log("Auth Error:", result.error);
+      if (result.error !== "CredentialsSignin") {
+        // Only show toast if it's a real error
+        toast.error("Invalid credentials");
+      }
     }
 
     // 3. Handle Success
