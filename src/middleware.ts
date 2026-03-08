@@ -68,3 +68,13 @@
 // export const config = {
 //   matcher: ["/signIn", "/signUp", "/", "/verify/:path*", "/dashboard/:path*"],
 // };
+
+import { NextResponse } from "next/server";
+
+export function middleware() {
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [], // Matches nothing
+};
