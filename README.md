@@ -6,7 +6,7 @@ A full-stack web application that lets users receive anonymous messages and feed
 
 ## 🔗 Live Demo
 
-[https://your-mystrymsg-url.vercel.app](https://your-mystrymsg-url.vercel.app)
+https://mystrymsg-rho.vercel.app/
 
 **Test login:**
 
