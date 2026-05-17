@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![CI](https://github.com/syedsaadaliaskari/mystrymsg/actions/workflows/ci.yml/badge.svg)
 
-## Getting Started
+# MystryMessage — Anonymous Feedback Platform
 
-First, run the development server:
+A full-stack web application that lets users receive anonymous messages and feedback through a shareable public link — no account required for senders. Built with Next.js, TypeScript, MongoDB, and NextAuth.
+
+## 🔗 Live Demo
+
+[https://your-mystrymsg-url.vercel.app](https://your-mystrymsg-url.vercel.app)
+
+**Test login:**
+
+- Email: `test@example.com`
+- Password: `password`
+
+---
+
+## 🏗️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Database:** MongoDB with Mongoose ODM
+- **Auth:** NextAuth v5 (JWT, bcrypt password hashing)
+- **Validation:** Zod schema validation
+- **UI:** shadcn/ui, Tailwind CSS
+- **Email:** Resend
+- **Deployment:** Vercel
+
+---
+
+## ✨ Features
+
+- **Anonymous Messaging** — shareable public URLs let anyone send feedback without creating an account
+- **User Dashboard** — private inbox showing all received anonymous messages
+- **Message Controls** — toggle message acceptance on/off at any time
+- **Optimistic UI** — instant message deletion with scoped re-renders, no full component remount
+- **Secure Auth** — session management via NextAuth with bcrypt-hashed passwords
+- **Input Validation** — Zod schema validation on all server-side inputs, no unvalidated data reaches the database
+- **Email Verification** — account verification via Resend on signup
+- **AI Suggestions** — AI-generated message suggestions for senders
+
+---
+
+## 🚀 Running Locally
+
+### Prerequisites
+
+- Node.js 18+
+- MongoDB Atlas account
+- Resend account for emails
+
+### Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/syedsaadaliaskari/mystrymsg.git
+cd mystrymsg
+```
+
+2. Install dependencies:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+3. Create `.env` file:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+AUTH_SECRET=your_random_secret_key
+NEXTAUTH_URL=http://localhost:3000
+RESEND_API_KEY=your_resend_api_key
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+src/
+├── app/
+│ ├── (auth)/ # Login and signup pages
+│ ├── (app)/
+│ │ └── dashboard/ # User message inbox
+│ ├── api/ # API routes
+│ └── user/
+│ └── [username]/ # Public anonymous message page
+├── components/ # Reusable UI components
+├── lib/ # Database connection
+├── models/ # Mongoose schemas
+└── schemas/ # Zod validation schemas
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔐 Security
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Passwords hashed with bcrypt before storage
+- JWT session strategy via NextAuth
+- Zod validation on all API inputs
+- No plain-text credentials stored at any layer
+- Messages fully isolated per user — no cross-user data access
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 Developer
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Syed Saad Ali Askari**
+
+- GitHub: [syedsaadaliaskari](https://github.com/syedsaadaliaskari)
+- LinkedIn: www.linkedin.com/in/syed-saad-ali-askari-0934263ab
+- Portfolio: [\[your portfolio url\]](https://portfolio-ebon-one-k7poyb641w.vercel.app/)
